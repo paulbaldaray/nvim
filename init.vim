@@ -31,6 +31,8 @@ endfunction
 let g:syntastic_check_on_open = 1
 call SourceDirectory("~/.config/nvim/lang")
 
+set exrc
+
 " Terminal Settings
 map <silent> <C-t> :terminal<CR>
 autocmd TermOpen * setlocal nonumber norelativenumber
