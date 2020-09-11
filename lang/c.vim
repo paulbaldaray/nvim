@@ -7,7 +7,7 @@ function SetLangC()
 	let g:syntastic_c_compiler = 'gcc'
 	let g:syntastic_c_compiler_options = '-std=c99 -Wall -pedantic'
 	let g:syntastic_c_include_dirs = ['inc', 'include', 'config', '.']
-	nnoremap <silent> <C-x> :!gcc % -o tmp ; ./tmp ; rm tmp<CR>
+	noremap <A-b> :!icpp % 
 
 endfunction
 

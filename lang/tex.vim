@@ -3,20 +3,14 @@ autocmd FileType tex call SetLangTex()
 
 function SetLangTex()
 
-	set shiftwidth=2 tabstop=2 expandtab
+	set shiftwidth=2 tabstop=2 noexpandtab
 	set textwidth=80
 
 	let g:syntastic_tex_checkers = []
 
-	nnoremap <silent> <buffer> <A-b> :call CompileLatex() <CR>
-	nnoremap <silent> <buffer> <A-o> :!open %:p:h:h/bin/%:t:r.pdf <CR>
-	nnoremap <Esc>m :call RepMath() <CR>
+	noremap <silent> <buffer> <A-b> :call CompileLatex() <CR>
+	noremap <silent> <buffer> <A-o> :!open %:p:h:h/bin/%:t:r.pdf <CR>
 
-endfunction
-
-function RepMath()
-	:%s/ \* / $\\cdot$ /gc
-	:%s/ \/ / $\\div$ /gc
 endfunction
 
 function CompileLatex()
