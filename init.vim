@@ -20,7 +20,16 @@ colorscheme gruvbox
 set background=dark
 highlight MatchParen ctermbg=blue
 highlight Normal ctermbg=None
-autocmd VimEnter * ColorHighlight
+
+function SourceLocal()
+	if filereadable(".nvimrc")
+		source .nvimrc
+	elseif filereadable(".exrc")
+		source .exrc
+	endif
+endfunction
+
+autocmd BufEnter * call SourceLocal()
 
 function! SourceDirectory(file)
 	for s:fpath in split(globpath(a:file, '*.vim'), '\n')
@@ -30,8 +39,6 @@ endfunction
 
 let g:syntastic_check_on_open = 1
 call SourceDirectory("~/.config/nvim/lang")
-
-set exrc
 
 " Terminal Settings
 map <silent> <C-t> :terminal<CR>
@@ -63,3 +70,4 @@ noremap <silent> <A-c> :ColorToggle<CR>
 noremap <silent> <A-q> :q<CR>
 map <silent> <A-e> :e .<CR>
 map <silent> <A-v> :set number! relativenumber! list! paste!<CR>
+
