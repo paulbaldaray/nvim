@@ -14,6 +14,7 @@ set shiftwidth=2 tabstop=2 noexpandtab
 set autoindent smarttab
 set nohlsearch incsearch ignorecase smartcase
 set list listchars=trail:_,tab:›\ 
+set clipboard+=unnamedplus
 
 syntax on
 colorscheme gruvbox
@@ -70,4 +71,3 @@ noremap <silent> <A-c> :ColorToggle<CR>
 noremap <silent> <A-q> :q<CR>
 map <silent> <A-e> :e .<CR>
 map <silent> <A-v> :set number! relativenumber! list! paste!<CR>
-
