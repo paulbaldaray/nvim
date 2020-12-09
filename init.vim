@@ -39,6 +39,7 @@ function! SourceDirectory(file)
 endfunction
 
 let g:syntastic_check_on_open = 1
+let g:netrw_keepdir = 0
 call SourceDirectory("~/.config/nvim/lang")
 
 " Terminal Settings
