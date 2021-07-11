@@ -5,12 +5,15 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'chrisbra/Colorizer'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
 call plug#end()
 
 set backspace=1
 set laststatus=0
 set number relativenumber
-set shiftwidth=2 tabstop=2 noexpandtab
+set shiftwidth=4 tabstop=4 expandtab
 set autoindent smarttab
 set nohlsearch incsearch ignorecase smartcase
 set list listchars=trail:_,tab:›\ 
@@ -30,8 +33,6 @@ function SourceLocal()
 	endif
 endfunction
 
-autocmd BufEnter * call SourceLocal()
-
 function! SourceDirectory(file)
 	for s:fpath in split(globpath(a:file, '*.vim'), '\n')
 		exe 'source' s:fpath
@@ -39,36 +40,8 @@ function! SourceDirectory(file)
 endfunction
 
 let g:syntastic_check_on_open = 1
-let g:netrw_keepdir = 0
+let g:netrw_menu = 0
+let g:netrw_banner = 0
 call SourceDirectory("~/.config/nvim/lang")
-
-" Terminal Settings
-map <silent> <C-t> :terminal<CR>
-autocmd TermOpen * setlocal nonumber norelativenumber
-tnoremap <A-q> <C-\><C-n>
-
-" Tab Bindings
-noremap <silent> <A-t> :tabedit<CR>
-noremap <A-1> 1gt
-noremap <A-2> 2gt
-noremap <A-3> 3gt
-noremap <A-4> 4gt
-noremap <A-5> 5gt
-noremap <A-6> 6gt
-noremap <A-7> 7gt
-noremap <A-8> 8gt
-noremap <A-9> 9gt
-
-" Split Bindings
-noremap <silent> <A-s> :vsplit<CR>
-noremap <silent> <A-S> :split<CR>
-noremap <A-h> <C-w>h
-noremap <A-j> <C-w>j
-noremap <A-k> <C-w>k
-noremap <A-l> <C-w>l
-
-" Misc Bindings
-noremap <silent> <A-c> :ColorToggle<CR>
-noremap <silent> <A-q> :q<CR>
-map <silent> <A-e> :e .<CR>
-map <silent> <A-v> :set number! relativenumber! list! paste!<CR>
+call SourceDirectory("~/.config/nvim/keybindings")
+autocmd BufEnter * call SourceLocal()

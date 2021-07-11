@@ -1,5 +1,6 @@
 let g:tex_flavor = "latex"
 autocmd FileType tex call SetLangTex()
+autocmd BufEnter *.tex call SetLangTex()
 
 function SetLangTex()
 

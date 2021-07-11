@@ -1,5 +1,4 @@
-autocmd BufEnter *.l set filetype=lisp
-autocmd FileType lisp call SetLangLisp()
+autocmd BufEnter *.l set SetLangLisp()
 function SetLangLisp()
 
 	set shiftwidth=2 tabstop=2 expandtab
