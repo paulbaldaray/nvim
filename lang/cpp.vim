@@ -6,7 +6,7 @@ function SetLangCPP()
 	set textwidth=80
 
 	let g:syntastic_cpp_compiler = 'g++'
-	let g:syntastic_cpp_compiler_options = ' -std=c++11'
+	let g:syntastic_cpp_compiler_options = ' -std=c++17'
 	let g:syntastic_cpp_include_dirs = ['inc', 'include', 'config', '.']
 	noremap <A-b> :!icpp % 
 	noremap <A-B> :!make && ./bin/*<CR>
