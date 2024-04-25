@@ -4,8 +4,7 @@ autocmd BufEnter *.tex call SetLangTex()
 
 function SetLangTex()
 
-	set shiftwidth=2 tabstop=2 noexpandtab
-	set textwidth=80
+	set shiftwidth=2 tabstop=2 expandtab
 
 	let g:syntastic_tex_checkers = []
 
