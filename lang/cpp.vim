@@ -8,6 +8,6 @@ function SetLangCPP()
   let g:syntastic_cpp_compiler_options = ' -std=c++20'
   let g:syntastic_cpp_include_dirs = ['inc', 'include', 'config', '.']
 
-  noremap <A-b> :!icpp % 
+  noremap <A-b> :!~/.config/nvim/scripts/icpp % 
   noremap <A-S-b> :!echo '' \| icpp %<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 endfunction
