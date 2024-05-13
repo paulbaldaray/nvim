@@ -1,60 +1,6 @@
-call plug#begin('~/.config/nvim/plugged')
-Plug 'morhetz/gruvbox'
-Plug 'sainnhe/sonokai'
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'
-Plug 'chrisbra/Colorizer'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'MunifTanjim/nui.nvim'        " it's a dependency
-Plug 'xeluxee/competitest.nvim'
-call plug#end()
-
-set backspace=1
-set colorcolumn=80
-set laststatus=0
-set number relativenumber
-set shiftwidth=2 tabstop=2 expandtab
-set textwidth=0 wrapmargin=0
-set autoindent smarttab
-set nohlsearch incsearch ignorecase smartcase
-set list listchars=trail:_,tab:›\ 
-set clipboard+=unnamedplus
-let g:python_highlight_all = 1
-
-syntax on
-colorscheme sonokai
-set background=dark
-highlight MatchParen ctermbg=blue
-highlight Normal ctermbg=None
-
-function SourceLocal()
-	if filereadable(".nvimrc")
-		source .nvimrc
-	elseif filereadable(".exrc")
-		source .exrc
-	endif
-endfunction
-
-function! SourceDirectory(file)
-	for s:fpath in split(globpath(a:file, '*.vim'), '\n')
-		exe 'source' s:fpath
-	endfor
-endfunction
-
-noremap <A-b> :!%
-let g:syntastic_check_on_open = 1
-let g:netrw_menu = 0
-let g:netrw_banner = 0
-call SourceDirectory("~/.config/nvim/lang")
-call SourceDirectory("~/.config/nvim/keybindings")
-autocmd BufEnter * call SourceLocal()
-
-lua << TREESITTER
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "cpp" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "cpp", 'python', 'kotlin' },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -93,4 +39,3 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
-TREESITTER
