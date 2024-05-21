@@ -1,23 +1,23 @@
 " Split Bindings
-noremap <silent> <A-t> :call CreateWindow()<CR>
-noremap <silent> <A-h> :call ResizeWindow(1)<CR>
-noremap <A-j> <C-w>w
-noremap <A-k> <C-w>W
-noremap <silent> <A-l> :call ResizeWindow(0)<CR>
-noremap <silent> <A-CR> :call SetMainWindow()<CR>
-noremap <silent> <A-q> :call CloseWindow()<CR>
+noremap <silent> <D-z> :call CreateWindow()<CR>
+noremap <silent><D-a> :call ResizeWindow(1)<CR>
+noremap <D-j> <C-w>w
+noremap <D-k> <C-w>W
+noremap <silent> <D-b> :call ResizeWindow(0)<CR>
+noremap <silent> <D-CR> :call SetMainWindow()<CR>
+noremap <silent> <D-q> :call CloseWindow()<CR>
 
 " Tab Bindings
-noremap <silent> <A-T> :call CreateNewTab()<CR>
-noremap <A-1> 1gt
-noremap <A-2> 2gt
-noremap <A-3> 3gt
-noremap <A-4> 4gt
-noremap <A-5> 5gt
-noremap <A-6> 6gt
-noremap <A-7> 7gt
-noremap <A-8> 8gt
-noremap <A-9> 9gt
+noremap <silent> <D-T> :call CreateNewTab()<CR>
+noremap <D-1> 1gt
+noremap <D-2> 2gt
+noremap <D-3> 3gt
+noremap <D-4> 4gt
+noremap <D-5> 5gt
+noremap <D-6> 6gt
+noremap <D-7> 7gt
+noremap <D-8> 8gt
+noremap <D-9> 9gt
 
 function CreateWindow()
     if winnr('$') == 1

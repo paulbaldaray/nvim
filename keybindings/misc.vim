@@ -1,5 +1,5 @@
 " Misc Bindings
-noremap <silent> <A-c> :ColorToggle<CR>
-map <silent> <A-e> :e %:p:h<CR>
-map <silent> <A-E> :bn<CR>
-map <silent> <A-p> :set number! relativenumber! list! paste!<CR>
+map <silent> <D-e> :e %:p:h<CR>
+map <silent> <D-E> :bn<CR>
+map <silent> <D-p> :set number! relativenumber! list! paste!<CR>
+map <silent> <D-x> :q<CR>
