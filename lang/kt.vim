@@ -4,6 +4,6 @@ function SetLangKT()
 
   set shiftwidth=2 tabstop=2 expandtab
 
-  noremap <A-b> :!~/.config/nvim/scripts/ikt % 
-  noremap <A-S-b> :!echo '' \| ikt %<Left><Left><Left><Left><Left><Left><Left><Left><Left>
+  noremap <D-b> :!~/.config/nvim/scripts/ikt % 
+  noremap <D-S-b> :!echo '' \| ikt %<Left><Left><Left><Left><Left><Left><Left><Left><Left>
 endfunction

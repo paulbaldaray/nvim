@@ -3,7 +3,7 @@ noremap <silent> <D-z> :call CreateWindow()<CR>
 noremap <silent><D-a> :call ResizeWindow(1)<CR>
 noremap <D-j> <C-w>w
 noremap <D-k> <C-w>W
-noremap <silent> <D-b> :call ResizeWindow(0)<CR>
+noremap <silent> <D-l> :call ResizeWindow(0)<CR>
 noremap <silent> <D-CR> :call SetMainWindow()<CR>
 noremap <silent> <D-q> :call CloseWindow()<CR>
 
