@@ -1,0 +1,13 @@
+#!/bin/bash
+cmd="$HOME/.config/nvim/scripts/$1"
+usage_err="Usage: irun [command] [input_file_content]"
+no_cmd_err="irun: '$cmd' does not exist"
+[[ -z "$1" ]] && echo "$usage_err" && exit 1
+[[ ! -f "$cmd" ]] && echo "$no_cmd_err" && exit 1
+
+file=""
+for x in "${@:3}"; do
+  file+="${x}\n"
+done
+
+echo -en "$file" | "$cmd" "$2"
