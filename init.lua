@@ -1,7 +1,6 @@
 local vim = vim
 
-require('plugins')
-require('treesitter-config')
+require("config.lazy")
 require('options')
 
 vim.api.nvim_exec([[
