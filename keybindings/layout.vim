@@ -64,3 +64,8 @@ function CreateNewTab()
     tabedit
     e .
 endfunction
+
+function NvimConfigEdit()
+    tabedit
+    e ~/.config/nvim
+endfunction
