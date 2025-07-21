@@ -13,8 +13,6 @@ vim.keymap.set('n', '<leader>k', '<C-w>k')
 vim.keymap.set('n', '<leader>l', '<C-w>l')
 vim.keymap.set('n', '<leader>s', '<C-w>s')
 vim.keymap.set('n', '<leader>v', '<C-w>v')
-vim.keymap.set('n', '<leader>-', '10<C-w><')
-vim.keymap.set('n', '<leader>=', '10<C-w>>')
 
 -- Quit
 vim.keymap.set('n', '<leader>q', ':q<CR>')
