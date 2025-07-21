@@ -1,0 +1,12 @@
+#!/bin/bash
+[ -z "$1" ] && echo "Usage: ikt [filename]" && exit 1
+[ ! -f "$1" ] && echo "ikt: File '$1' does not exist" && exit 1
+
+OUT="/tmp/ikt_tmp_fj2823jf.jar"
+kotlinc "$1" -include-runtime -d "$OUT"
+error="$?"
+if [[ "$error" = '0' ]]; then
+  java -jar $OUT "${@:1}"
+fi
+
+rm -f $OUT
