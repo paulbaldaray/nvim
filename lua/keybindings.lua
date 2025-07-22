@@ -15,8 +15,8 @@ vim.keymap.set('n', '<leader>s', '<C-w>s')
 vim.keymap.set('n', '<leader>v', '<C-w>v')
 
 -- Quit
-vim.keymap.set('n', '<leader>q', ':q<CR>')
-vim.keymap.set('n', '<leader>qq', ':q!<CR>')
+vim.keymap.set('n', '<leader>x', ':q<CR>')
+vim.keymap.set('n', '<leader>xx', ':q!<CR>')
 
 -- Misc
 vim.keymap.set('n', '<leader><BS>', ':nohl<CR>')

@@ -25,3 +25,4 @@ vim.g.clipboard = {
 
 -- Misc
 vim.opt.timeoutlen=300
+
