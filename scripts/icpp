@@ -3,7 +3,7 @@
 [ ! -f "$1" ] && echo "icpp: File '$1' does not exist" && exit 1
 
 OUT="/tmp/icpp_tmp_fec951c1"
-clang++ -std=c++20 -Wall "$1" -o "$OUT"
+clang++ -std=c++20 -O2 -Wall "$1" -o "$OUT"
 error="$?"
 if [[ "$error" = '0' ]]; then
   $OUT "${@:1}"
