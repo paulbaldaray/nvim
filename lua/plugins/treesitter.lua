@@ -7,6 +7,8 @@ return {
     local configs = require("nvim-treesitter.configs")
     vim.opt.foldmethod = "expr"
     vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    vim.opt.foldlevel = 99
+    vim.filetype.add({ extension = { aiy = "python" } })
     configs.setup({
       ensure_installed = {"lua", "cpp", "python", "java", "sql", "markdown", "markdown_inline" },
       highlight = { enable = true },
