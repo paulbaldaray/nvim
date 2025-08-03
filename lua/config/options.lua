@@ -7,7 +7,7 @@ vim.opt.termguicolors = true
 
 -- Misc
 vim.opt.timeoutlen = 300
-vim.opt.shell = vim.env.SHELL .. " -i"
+vim.opt.shell = vim.env.SHELL
 
 -- Filetypes
 vim.filetype.add({
