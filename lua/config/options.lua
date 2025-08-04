@@ -6,7 +6,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
 
 -- Misc
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 400
 vim.opt.shell = vim.env.SHELL
 
 -- Filetypes
