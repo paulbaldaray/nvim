@@ -14,5 +14,6 @@ vim.filetype.add({
   extension = {
     aiy = "python",
     mdc = "markdown",
+    ssql = "sql",
   },
 })
