@@ -8,6 +8,7 @@ vim.opt.termguicolors = true
 -- Misc
 vim.opt.timeoutlen = 300
 vim.opt.shell = vim.env.SHELL
+vim.opt.clipboard = "unnamedplus"
 
 -- Filetypes
 vim.filetype.add({
