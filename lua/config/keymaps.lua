@@ -32,13 +32,17 @@ vim.keymap.set("n", "<leader>.", "<cmd>lcd %:p:h<CR>", { desc = "Change CWD to c
 -- Yanking
 
 vim.keymap.set("n", "<leader>yP", function()
-  vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line("."))
-end, { desc = "Yank file path and line number to clipboard" })
+  local yanked_text = vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")
+  vim.fn.setreg("+", yanked_text)
+  vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
+end, { desc = "Yank absolute path" })
 
 vim.keymap.set("n", "<leader>yp", function()
   local full_path = vim.api.nvim_buf_get_name(0)
   local cwd = vim.fn.getcwd()
   local rel_path = vim.fn.fnamemodify(full_path, ":." .. cwd)
   local line = vim.fn.line(".")
-  vim.fn.setreg("+", rel_path .. ":" .. line)
-end, { desc = "Yank relative file path and line number to clipboard" })
+  local yanked_text = rel_path .. ":" .. line
+  vim.fn.setreg("+", yanked_text)
+  vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
+end, { desc = "Yank relative path" })
