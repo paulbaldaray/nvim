@@ -28,3 +28,8 @@ vim.keymap.del("v", "<A-k>")
 
 -- Directory Management
 vim.keymap.set("n", "<leader>.", "<cmd>cd %:p:h<CR>", { desc = "Change CWD to current file directory" })
+
+-- Get current filename and path
+vim.keymap.set("n", "<leader>yp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line("."))
+end, { desc = "Yank file path and line number to clipboard" })
