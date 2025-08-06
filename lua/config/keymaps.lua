@@ -27,9 +27,18 @@ vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
 
 -- Directory Management
-vim.keymap.set("n", "<leader>.", "<cmd>cd %:p:h<CR>", { desc = "Change CWD to current file directory" })
+vim.keymap.set("n", "<leader>.", "<cmd>lcd %:p:h<CR>", { desc = "Change CWD to current file directory" })
 
--- Get current filename and path
-vim.keymap.set("n", "<leader>yp", function()
+-- Yanking
+
+vim.keymap.set("n", "<leader>yP", function()
   vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line("."))
 end, { desc = "Yank file path and line number to clipboard" })
+
+vim.keymap.set("n", "<leader>yp", function()
+  local full_path = vim.api.nvim_buf_get_name(0)
+  local cwd = vim.fn.getcwd()
+  local rel_path = vim.fn.fnamemodify(full_path, ":." .. cwd)
+  local line = vim.fn.line(".")
+  vim.fn.setreg("+", rel_path .. ":" .. line)
+end, { desc = "Yank relative file path and line number to clipboard" })
