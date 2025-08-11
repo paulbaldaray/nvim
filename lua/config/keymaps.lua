@@ -27,7 +27,7 @@ vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
 
 -- Directory Management
-vim.keymap.set("n", "<leader>.", "<cmd>lcd %:p:h<CR>", { desc = "Change CWD to current file directory" })
+vim.keymap.set("n", "<leader>.", "<cmd>cd %:p:h<CR>", { desc = "Change CWD to current file directory" })
 
 -- Yanking
 
