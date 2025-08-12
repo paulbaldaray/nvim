@@ -16,5 +16,6 @@ vim.filetype.add({
     aiy = "python",
     mdc = "markdown",
     ssql = "sql",
+    tmux = "tmux",
   },
 })
