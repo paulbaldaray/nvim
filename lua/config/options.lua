@@ -17,6 +17,6 @@ vim.filetype.add({
 		mdc = "markdown",
 		ssql = "sql",
 		tmux = "tmux",
-		hpp4 = "cpp",
+		hppm4 = "cpp",
 	},
 })
