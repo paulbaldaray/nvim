@@ -53,30 +53,3 @@ vim.keymap.set("n", "<leader>yP", function()
 	vim.fn.setreg("+", yanked_text)
 	vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
 end, { desc = "Yank absolute path" })
-
--- Lazygit
-
-if vim.fn.executable("lazygit") == 1 then
-	-- If lazygit is installed, set up the keymaps
-	vim.keymap.set("n", "<leader>gg", function()
-		Snacks.lazygit({ cwd = LazyVim.root.git() })
-	end, { desc = "Lazygit (Root Dir)" })
-	vim.keymap.set("n", "<leader>gG", function()
-		Snacks.lazygit()
-	end, { desc = "Lazygit (cwd)" })
-	vim.keymap.set("n", "<leader>gf", function()
-		Snacks.picker.git_log_file()
-	end, { desc = "Git Current File History" })
-	vim.keymap.set("n", "<leader>gl", function()
-		Snacks.picker.git_log({ cwd = LazyVim.root.git() })
-	end, { desc = "Git Log" })
-	vim.keymap.set("n", "<leader>gL", function()
-		Snacks.picker.git_log()
-	end, { desc = "Git Log (cwd)" })
-elseif vim.fn.executable("go") == 1 then
-	vim.notify("Lazygit not found. Go is installed, attempting to install...", vim.log.levels.WARN)
-	vim.fn.system({ "go", "install", "github.com/jesseduffield/lazygit@latest" })
-	vim.notify("Lazygit installation complete. Restart Neovim to use it.", vim.log.levels.INFO)
-else
-	vim.notify("Lazygit not found and Go is not installed. Please install Go to use Lazygit.", vim.log.levels.ERROR)
-end
