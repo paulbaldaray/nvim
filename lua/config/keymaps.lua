@@ -31,18 +31,52 @@ vim.keymap.set("n", "<leader>.", "<cmd>cd %:p:h<CR>", { desc = "Change CWD to cu
 
 -- Yanking
 
-vim.keymap.set("n", "<leader>yP", function()
-  local yanked_text = vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")
-  vim.fn.setreg("+", yanked_text)
-  vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
-end, { desc = "Yank absolute path" })
+function GitRoot()
+	local dir = vim.fn.expand("%:p:h")
+	return vim.fn.systemlist("git -C " .. dir .. " rev-parse --show-toplevel")[1]
+end
 
 vim.keymap.set("n", "<leader>yp", function()
-  local full_path = vim.api.nvim_buf_get_name(0)
-  local cwd = vim.fn.getcwd()
-  local rel_path = vim.fn.fnamemodify(full_path, ":." .. cwd)
-  local line = vim.fn.line(".")
-  local yanked_text = rel_path .. ":" .. line
-  vim.fn.setreg("+", yanked_text)
-  vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
-end, { desc = "Yank relative path" })
+	local full_path = vim.api.nvim_buf_get_name(0)
+	local git_root = GitRoot()
+	if git_root ~= "" then
+		local rel_path = vim.fn.fnamemodify(full_path, ":." .. git_root)
+		vim.fn.setreg("+", rel_path)
+		vim.notify("Yanked: " .. rel_path, vim.log.levels.INFO)
+	else
+		vim.notify("Not in a Git repository.", vim.log.levels.WARN)
+	end
+end, { desc = "Yank relative path from Git root" })
+
+vim.keymap.set("n", "<leader>yP", function()
+	local yanked_text = vim.fn.expand("%:p")
+	vim.fn.setreg("+", yanked_text)
+	vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
+end, { desc = "Yank absolute path" })
+
+-- Lazygit
+
+if vim.fn.executable("lazygit") == 1 then
+	-- If lazygit is installed, set up the keymaps
+	vim.keymap.set("n", "<leader>gg", function()
+		Snacks.lazygit({ cwd = LazyVim.root.git() })
+	end, { desc = "Lazygit (Root Dir)" })
+	vim.keymap.set("n", "<leader>gG", function()
+		Snacks.lazygit()
+	end, { desc = "Lazygit (cwd)" })
+	vim.keymap.set("n", "<leader>gf", function()
+		Snacks.picker.git_log_file()
+	end, { desc = "Git Current File History" })
+	vim.keymap.set("n", "<leader>gl", function()
+		Snacks.picker.git_log({ cwd = LazyVim.root.git() })
+	end, { desc = "Git Log" })
+	vim.keymap.set("n", "<leader>gL", function()
+		Snacks.picker.git_log()
+	end, { desc = "Git Log (cwd)" })
+elseif vim.fn.executable("go") == 1 then
+	vim.notify("Lazygit not found. Go is installed, attempting to install...", vim.log.levels.WARN)
+	vim.fn.system({ "go", "install", "github.com/jesseduffield/lazygit@latest" })
+	vim.notify("Lazygit installation complete. Restart Neovim to use it.", vim.log.levels.INFO)
+else
+	vim.notify("Lazygit not found and Go is not installed. Please install Go to use Lazygit.", vim.log.levels.ERROR)
+end
