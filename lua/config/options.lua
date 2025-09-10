@@ -18,5 +18,6 @@ vim.filetype.add({
 		ssql = "sql",
 		tmux = "tmux",
 		hppm4 = "cpp",
+		yapl = "yaml",
 	},
 })
