@@ -2,6 +2,7 @@ local toggle_key = "<leader>cc"
 return {
 	{
 		"coder/claudecode.nvim",
+		lazy = false,
 		dependencies = { "folke/snacks.nvim" },
 		keys = {
 			{ toggle_key, "<cmd>ClaudeCodeFocus<cr>", desc = "Claude Code", mode = { "n", "x" } },
