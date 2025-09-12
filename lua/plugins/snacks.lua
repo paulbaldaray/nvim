@@ -1,6 +1,11 @@
 return {
 	"folke/snacks.nvim",
 	lazy = false,
+	opts = {
+		scratch = {
+			ft = "markdown",
+		},
+	},
 	keys = {
 		{
 			"<leader>'",

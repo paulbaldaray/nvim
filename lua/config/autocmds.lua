@@ -1,25 +1,18 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.yapl",
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "yaml", "markdown" },
 	callback = function()
-		vim.bo.filetype = "yaml"
-		vim.bo.commentstring = "# %s"
 		vim.bo.tabstop = 2
 		vim.bo.shiftwidth = 2
 		vim.bo.expandtab = true
 
-		-- Use matchadd for highlighting instead of syntax
 		vim.defer_fn(function()
-			-- Define highlight groups
 			vim.api.nvim_set_hl(0, "YaplKeywordType", { fg = "#cba6f7", bold = true })
 			vim.api.nvim_set_hl(0, "YaplKeywordLet", { fg = "#cba6f7", bold = true })
 			vim.api.nvim_set_hl(0, "YaplKeywordInclude", { fg = "#cba6f7", bold = true })
 			vim.api.nvim_set_hl(0, "YaplKeywordImport", { fg = "#cba6f7", bold = true })
 			vim.api.nvim_set_hl(0, "YaplKeywordFor", { fg = "#cba6f7", bold = true })
 			vim.api.nvim_set_hl(0, "YaplVariable", { fg = "#fab387" })
-
-			-- Add matches
 			vim.fn.matchadd("YaplKeywordType", "^\\s*\\zsyapl\\ze\\s*:")
 			vim.fn.matchadd("YaplKeywordLet", "^\\s*\\zslet\\ze\\s*:")
 			vim.fn.matchadd("YaplKeywordInclude", "^\\s*\\zsinclude\\ze\\s*:")
