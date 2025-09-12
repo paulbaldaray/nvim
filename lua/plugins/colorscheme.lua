@@ -6,7 +6,4 @@ return {
 			colorscheme = "catppuccin",
 		},
 	},
-	require("catppuccin").setup({
-		auto_integrations = true,
-	}),
 }
