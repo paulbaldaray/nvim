@@ -26,9 +26,6 @@ vim.keymap.del("i", "<A-k>")
 vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
 
--- Directory Management
-vim.keymap.set("n", "<leader>.", "<cmd>cd %:p:h<CR>", { desc = "Change CWD to current file directory" })
-
 -- Yanking
 
 function GitRoot()
