@@ -1,15 +1,11 @@
 local scratch_dir = vim.fn.stdpath("data") .. "/scratch/"
-local default_scratch = scratch_dir .. "scratch.md"
-local last_scratch = default_scratch
+local last_scratch = "scratch"
 
 local function get_scratch_files()
+	local files = vim.fn.globpath(scratch_dir, "*.md", 0, 1)
 	local scratches = {}
-	if vim.fn.isdirectory(scratch_dir) == 1 then
-		local files = vim.fn.globpath(scratch_dir, "*.md", 0, 1)
-		for _, file in ipairs(files) do
-			local name = vim.fn.fnamemodify(file, ":t:r")
-			table.insert(scratches, name)
-		end
+	for _, file in ipairs(files) do
+		table.insert(scratches, vim.fn.fnamemodify(file, ":t:r"))
 	end
 	return scratches
 end
@@ -18,81 +14,45 @@ local function get_scratch_path(name)
 	return scratch_dir .. name .. ".md"
 end
 
-local function close_scratch_buffers()
-	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_is_loaded(bufnr) then
-			local bufname = vim.api.nvim_buf_get_name(bufnr)
-			if bufname:match(vim.pesc(scratch_dir)) then
-				local wins = vim.fn.win_findbuf(bufnr)
-				for _, winnr in ipairs(wins) do
-					vim.api.nvim_win_close(winnr, false)
-				end
-			end
-		end
-	end
+local function open_scratch(name)
+	last_scratch = name
+	Snacks.scratch.open({ file = get_scratch_path(name), name = name })
 end
 
-local function open_scratch_buffer(file_path, name)
-	close_scratch_buffers()
-	last_scratch = file_path
-	if name == "scratch" then
-		Snacks.scratch()
-	else
-		Snacks.scratch.open({ file = file_path, name = name })
-	end
+local function is_scratch_focused()
+	local bufname = vim.api.nvim_buf_get_name(0)
+	return bufname:match(vim.pesc(scratch_dir)) ~= nil
 end
 
-local function is_scratch_buffer_open()
-	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_is_loaded(bufnr) then
-			local bufname = vim.api.nvim_buf_get_name(bufnr)
-			if bufname:match(vim.pesc(scratch_dir)) then
-				local wins = vim.fn.win_findbuf(bufnr)
-				if #wins > 0 then
-					return true
-				end
-			end
-		end
-	end
-	return false
-end
-
-local function select_scratch_buffer()
+local function scratch_menu()
 	local scratches = get_scratch_files()
+	local items = vim.list_extend({}, scratches)
+	table.insert(items, "+ Create New")
+	table.insert(items, "- Delete")
 	
-	if #scratches == 0 then
-		vim.notify("No scratch buffers found")
-		return
-	end
-	
-	vim.ui.select(scratches, {
-		prompt = "Select scratch buffer:",
-		format_item = function(item)
-			return item
-		end,
-	}, function(choice)
-		if choice then
-			local file_path = get_scratch_path(choice)
-			open_scratch_buffer(file_path, choice)
+	vim.ui.select(items, { prompt = "Scratch:" }, function(choice)
+		if not choice then return end
+		
+		if choice == "+ Create New" then
+			local name = vim.fn.input("Name: ")
+			if name ~= "" then open_scratch(name) end
+		elseif choice == "- Delete" then
+			vim.ui.select(scratches, { prompt = "Delete:" }, function(name)
+				if not name then return end
+				vim.fn.delete(get_scratch_path(name))
+				vim.notify("Deleted: " .. name)
+			end)
+		else
+			open_scratch(choice)
 		end
 	end)
 end
 
-local function create_named_scratch_buffer()
-	local name = vim.fn.input("Scratch buffer name: ")
-	if name ~= "" then
-		vim.fn.mkdir(scratch_dir, "p")
-		local file_path = get_scratch_path(name)
-		open_scratch_buffer(file_path, name)
-	end
-end
-
-local function toggle_scratch_buffer()
-	if is_scratch_buffer_open() then
-		close_scratch_buffers()
+local function toggle_scratch()
+	if is_scratch_focused() then
+		Snacks.scratch.close()
 	else
-		local name = vim.fn.fnamemodify(last_scratch, ":t:r")
-		open_scratch_buffer(last_scratch, name)
+		open_scratch(last_scratch)
 	end
 end
 
@@ -101,25 +61,25 @@ return {
 	lazy = false,
 	opts = {
 		scratch = {
-			ft = "markdown",
-			file = default_scratch,
+			win = {
+				width = 0.5,
+				height = 0.5,
+				zindex = 1000,
+			},
 		},
 	},
 	keys = {
 		{
 			"<leader>'",
-			select_scratch_buffer,
-			desc = "Select Scratch Buffer",
+			toggle_scratch,
+			desc = "Toggle Scratch Buffer",
+			mode = { "n", "x", "t" },
 		},
 		{
 			'<leader>"',
-			create_named_scratch_buffer,
-			desc = "Create Named Scratch Buffer",
-		},
-		{
-			"<leader>.",
-			toggle_scratch_buffer,
-			desc = "Toggle Scratch Buffer",
+			scratch_menu,
+			desc = "Scratch Buffer Menu",
+			mode = { "n", "x", "t" },
 		},
 	},
 }
