@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("FileType", {
 			vim.fn.matchadd("YaplKeywordInclude", "^\\s*\\zsinclude\\ze\\s*:")
 			vim.fn.matchadd("YaplKeywordImport", "^\\s*\\zsimport\\ze\\s*:")
 			vim.fn.matchadd("YaplKeywordFor", "^\\s*-\\?\\s*\\zsfor\\ze\\s\\+\\w\\+\\s\\+in\\s")
-			vim.fn.matchadd("YaplVariable", "<[a-zA-Z_][a-zA-Z0-9_]*\\((::)?[a-zA-Z_][a-zA-Z0-9_]*\\)*>")
+			vim.fn.matchadd("YaplVariable", "<[a-zA-Z_][a-zA-Z0-9_]*\\(::[a-zA-Z_][a-zA-Z0-9_]*\\)*>")
 		end, 200)
 	end,
 })

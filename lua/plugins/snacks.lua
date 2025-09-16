@@ -16,7 +16,7 @@ end
 
 local function open_scratch(name)
 	last_scratch = name
-	Snacks.scratch.open({ file = get_scratch_path(name), name = name })
+	Snacks.scratch.open({ file = get_scratch_path(name), name = name, ft = "markdown" })
 end
 
 local function is_scratch_focused()
