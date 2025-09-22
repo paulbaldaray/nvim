@@ -62,8 +62,8 @@ return {
 	opts = {
 		scratch = {
 			win = {
-				width = 0.5,
-				height = 0.5,
+				width = 0.7,
+				height = 0.7,
 				zindex = 1000,
 			},
 		},
@@ -73,13 +73,13 @@ return {
 			"<leader>'",
 			toggle_scratch,
 			desc = "Toggle Scratch Buffer",
-			mode = { "n", "x", "t" },
+			mode = { "n", "x" },
 		},
 		{
 			'<leader>"',
 			scratch_menu,
 			desc = "Scratch Buffer Menu",
-			mode = { "n", "x", "t" },
+			mode = { "n", "x" },
 		},
 	},
 }
