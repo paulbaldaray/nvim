@@ -2,9 +2,8 @@ return {
 	{ "mfussenegger/nvim-lint", enabled = false },
 	{ "nvim-mini/mini.pairs", enabled = false },
 	{ "saghen/blink.cmp", enabled = false },
-	-- Disable LSP and mason
+	{ "folke/lazydev", enabled = false },
+	{ "stevearc/conform", enabled = false },
+	{ "folke/persistence", enabled = false },
 	{ "neovim/nvim-lspconfig", enabled = false },
-	{ "mason-org/mason.nvim", enabled = false },
-	{ "mason-org/mason-lspconfig.nvim", enabled = false },
-	{ "WhoIsSethDaniel/mason-tool-installer.nvim", enabled = false },
 }

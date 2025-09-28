@@ -35,12 +35,13 @@ local function scratch_menu()
 		
 		if choice == "+ Create New" then
 			local name = vim.fn.input("Name: ")
-			if name ~= "" then open_scratch(name) end
+			if name then open_scratch(name) end
 		elseif choice == "- Delete" then
 			vim.ui.select(scratches, { prompt = "Delete:" }, function(name)
-				if not name then return end
-				vim.fn.delete(get_scratch_path(name))
-				vim.notify("Deleted: " .. name)
+				if name then
+					vim.fn.delete(get_scratch_path(name))
+					vim.notify("Deleted: " .. name)
+				end
 			end)
 		else
 			open_scratch(choice)

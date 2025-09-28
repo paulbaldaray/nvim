@@ -27,15 +27,11 @@ vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
 
 -- Yanking
-
-function GitRoot()
-	local dir = vim.fn.expand("%:p:h")
-	return vim.fn.systemlist("git -C " .. dir .. " rev-parse --show-toplevel")[1]
-end
+local util = require("config.util")
 
 vim.keymap.set("n", "<leader>yp", function()
 	local full_path = vim.api.nvim_buf_get_name(0)
-	local git_root = GitRoot()
+	local git_root = util.GitRoot()
 	if git_root ~= "" then
 		local rel_path = vim.fn.fnamemodify(full_path, ":." .. git_root)
 		vim.fn.setreg("+", rel_path)
