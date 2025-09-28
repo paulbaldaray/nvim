@@ -6,7 +6,6 @@ end
 
 local function change_dir(dir)
 	vim.cmd("cd " .. vim.fn.fnameescape(dir))
-	vim.cmd("lcd " .. vim.fn.fnameescape(dir))
 end
 
 local function open_explorer_at(dir)
@@ -24,11 +23,6 @@ local function explorer_git_root()
 	open_explorer_at(require("config.util").GitRoot())
 end
 
-local function explorer_search()
-	local dir = pick_nearest_dir()
-	Snacks.picker.files({ cwd = dir })
-end
-
 local function explorer_cd_to_focused()
 	local dir = pick_nearest_dir()
 	change_dir(dir)
@@ -41,6 +35,18 @@ end
 
 return {
 	"folke/snacks.nvim",
+	build = function()
+		require("config.util").ensure_binary({
+			name = "fd",
+			repo = "sharkdp/fd",
+			version = "v10.3.0",
+			targets = {
+				x86_64 = "x86_64-unknown-linux-musl",
+				aarch64 = "aarch64-unknown-linux-musl",
+			},
+			archive_path = "*/fd",
+		})
+	end,
 	keys = {
 		{ "<leader>e", explorer_git_root, desc = "Explorer (Git Root)" },
 		{ "<leader>E", explorer_parent_dir, desc = "Explorer (Parent Dir)" },
@@ -49,13 +55,9 @@ return {
 		picker = {
 			sources = {
 				explorer = {
-					layout = {
-						hidden = { "input" }, -- Hide the search input bar for explorer only
-					},
 					win = {
 						list = {
 							keys = {
-								["/"] = explorer_search,
 								["."] = explorer_cd_to_focused,
 								["<BS>"] = explorer_cd_parent,
 							},
