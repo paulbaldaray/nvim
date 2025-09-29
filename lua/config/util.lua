@@ -58,4 +58,22 @@ function M.ensure_binary(config)
 	end
 end
 
+function M.CopyAbsolutePath()
+	local yanked_text = vim.fn.expand("%:p")
+	vim.fn.setreg("+", yanked_text)
+	vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
+end
+
+function M.CopyGitRelativePath()
+	local full_path = vim.api.nvim_buf_get_name(0)
+	local git_root = M.GitRoot()
+	if git_root then
+		local rel_path = vim.fn.fnamemodify(full_path, ":." .. git_root)
+		vim.fn.setreg("+", rel_path)
+		vim.notify("Yanked: " .. rel_path, vim.log.levels.INFO)
+	else
+		M.CopyAbsolutePath()
+	end
+end
+
 return M

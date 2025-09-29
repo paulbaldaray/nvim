@@ -29,20 +29,6 @@ vim.keymap.del("v", "<A-k>")
 -- Yanking
 local util = require("config.util")
 
-vim.keymap.set("n", "<leader>yp", function()
-	local full_path = vim.api.nvim_buf_get_name(0)
-	local git_root = util.GitRoot()
-	if git_root ~= "" then
-		local rel_path = vim.fn.fnamemodify(full_path, ":." .. git_root)
-		vim.fn.setreg("+", rel_path)
-		vim.notify("Yanked: " .. rel_path, vim.log.levels.INFO)
-	else
-		vim.notify("Not in a Git repository.", vim.log.levels.WARN)
-	end
-end, { desc = "Yank relative path from Git root" })
+vim.keymap.set("n", "<leader>yp", util.CopyGitRelativePath, { desc = "Yank relative path from Git root" })
 
-vim.keymap.set("n", "<leader>yP", function()
-	local yanked_text = vim.fn.expand("%:p")
-	vim.fn.setreg("+", yanked_text)
-	vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
-end, { desc = "Yank absolute path" })
+vim.keymap.set("n", "<leader>yP", util.CopyAbsolutePath, { desc = "Yank absolute path" })

@@ -55,6 +55,9 @@ return {
 		picker = {
 			sources = {
 				explorer = {
+					layout = {
+						hidden = { "input" },
+					},
 					win = {
 						list = {
 							keys = {

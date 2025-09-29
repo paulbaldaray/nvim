@@ -6,4 +6,5 @@ return {
 	{ "stevearc/conform", enabled = false },
 	{ "folke/persistence", enabled = false },
 	{ "neovim/nvim-lspconfig", enabled = false },
+	{ "nvim-treesitter/nvim-treesitter", enabled = false },
 }
