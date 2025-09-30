@@ -13,11 +13,8 @@ vim.opt.clipboard = "unnamedplus"
 -- Filetypes
 vim.filetype.add({
 	extension = {
-		aiy = "python",
 		mdc = "markdown",
 		ssql = "sql",
 		tmux = "tmux",
-		hppm4 = "cpp",
-		yapl = "yaml",
 	},
 })

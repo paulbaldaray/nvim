@@ -1,4 +1,4 @@
--- Just use claude
+-- You don't need these. Just ask Claude!
 return {
 	{ "mfussenegger/nvim-lint", enabled = false },
 	{ "nvim-mini/mini.pairs", enabled = false },
