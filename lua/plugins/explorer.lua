@@ -21,16 +21,21 @@ return {
 			sources = {
 				explorer = {
 					layout = {
-						hidden = { "input" },
+						auto_hide = { "input" },
 					},
 					win = {
+						input = {
+							keys = {
+								["<Esc>"] = false,
+								["/"] = { "toggle_focus", mode = { "i", "n" } },
+							},
+						},
 						list = {
 							keys = {
 								["."] = require("util.explorer").cd_to_focused,
 								["<BS>"] = require("util.explorer").cd_parent,
-								["/"] = function() require("flash").jump() end,
-								["i"] = function() require("flash").jump() end,
 								["<C-s>"] = require("util.flash").anymode,
+								["<Esc>"] = false,
 							},
 						},
 					},

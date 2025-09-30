@@ -18,18 +18,34 @@ vim.keymap.set("n", "<C-Up>", "<cmd>resize -2<cr>")
 vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize -2<cr>")
 vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize +2<cr>")
 
--- Unmap the "Move Lines" bindings
+-- Clear
+vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>", { desc = "Clear search highlighting" })
+
+-- Yank
+vim.keymap.set(
+	"n",
+	"<leader>yp",
+	require("util.path").copy_git_relative_path,
+	{ desc = "Yank relative path from Git root" }
+)
+
+vim.keymap.set("n", "<leader>yP", require("util.path").copy_absolute_path, { desc = "Yank absolute path" })
+
+-- Navigate
+vim.keymap.set("n", "<leader><leader>", require("util.path").navigate, { desc = "Navigate to file or directory" })
+
+-- Jump
+vim.keymap.set(
+	{ "n", "v", "i", "x", "o", "t", "c", "s" },
+	"<C-s>",
+	require("util.flash").anymode,
+	{ desc = "Flash jump (from any mode)" }
+)
+
+-- Unmap
 vim.keymap.del("n", "<A-j>")
 vim.keymap.del("n", "<A-k>")
 vim.keymap.del("i", "<A-j>")
 vim.keymap.del("i", "<A-k>")
 vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
-
--- Yanking
-vim.keymap.set("n", "<leader>yp", require("util.path").copy_git_relative_path, { desc = "Yank relative path from Git root" })
-
-vim.keymap.set("n", "<leader>yP", require("util.path").copy_absolute_path, { desc = "Yank absolute path" })
-
-vim.keymap.set({ "n", "v", "i", "x", "o", "t", "c", "s" }, "<C-s>", require("util.flash").anymode,
-  { desc = "Flash jump (from any mode)", noremap = true, silent = true })

@@ -26,4 +26,22 @@ function M.copy_git_relative_path()
 	end
 end
 
+function M.navigate()
+	local input = vim.fn.input({
+		prompt = "Open file or change directory: ",
+		completion = "file",
+	})
+	if input and input ~= "" then
+		local expanded = vim.fn.expand(input)
+		if vim.fn.isdirectory(expanded) == 1 then
+			vim.cmd.cd(expanded)
+		elseif vim.fn.filereadable(expanded) == 1 then
+			vim.cmd.edit(expanded)
+		else
+			vim.notify("Path does not exist: " .. expanded, vim.log.levels.ERROR)
+		end
+	end
+end
+
 return M
+

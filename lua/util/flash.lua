@@ -1,10 +1,10 @@
 local M = {}
 
-local delay = 15
+local delay = 25
 
 function M.force_normal_mode(callback)
 	if vim.fn.mode() ~= "n" then
-		local escape_keys = vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, false, true)
+		local escape_keys = vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true)
 		vim.api.nvim_feedkeys(escape_keys, vim.fn.mode(), false)
 		if callback then
 			vim.defer_fn(callback, delay)
@@ -18,10 +18,14 @@ function M.anymode()
 	M.force_normal_mode(function()
 		require("flash").jump({
 			action = function(match, state)
-				function do_jump() require("flash.jump").jump(match, state) end
+				function do_jump()
+					require("flash.jump").jump(match, state)
+				end
 				do_jump()
-				vim.defer_fn(function() M.force_normal_mode(do_jump) end, delay)
-			end
+				vim.defer_fn(function()
+					M.force_normal_mode(do_jump)
+				end, delay)
+			end,
 		})
 	end)
 end
