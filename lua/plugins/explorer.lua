@@ -1,17 +1,5 @@
 return {
 	"folke/snacks.nvim",
-	build = function()
-		require("util.install").ensure_binary({
-			name = "fd",
-			repo = "sharkdp/fd",
-			version = "v10.3.0",
-			targets = {
-				x86_64 = "x86_64-unknown-linux-musl",
-				aarch64 = "aarch64-unknown-linux-musl",
-			},
-			archive_path = "*/fd",
-		})
-	end,
 	keys = {
 		{ "<leader>e", require("util.explorer").git_root, desc = "Explorer (Git Root)" },
 		{ "<leader>E", require("util.explorer").parent_dir, desc = "Explorer (Parent Dir)" },
