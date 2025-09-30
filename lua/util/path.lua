@@ -8,22 +8,52 @@ function M.git_root()
 	return vim.fn.fnamemodify(git_dir, ":h")
 end
 
-function M.copy_absolute_path()
-	local yanked_text = vim.fn.expand("%:p")
+function M.copy_absolute(line_num)
+	local path = vim.fn.expand("%:p")
+	local yanked_text = path
+	if line_num then
+		yanked_text = yanked_text .. "#L" .. line_num
+	end
 	vim.fn.setreg("+", yanked_text)
 	vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
 end
 
-function M.copy_git_relative_path()
+function M.copy_absolute_path()
+	M.copy_absolute(nil)
+end
+
+function M.copy_absolute_line()
+	M.copy_absolute(vim.fn.line("."))
+end
+
+function M.copy_absolute_directory()
+	local yanked_text = vim.fn.expand("%:p:h")
+	vim.fn.setreg("+", yanked_text)
+	vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
+end
+
+function M.copy_git_relative(line_num)
 	local full_path = vim.api.nvim_buf_get_name(0)
 	local git_root = M.git_root()
 	if git_root then
 		local rel_path = vim.fn.fnamemodify(full_path, ":." .. git_root)
-		vim.fn.setreg("+", rel_path)
-		vim.notify("Yanked: " .. rel_path, vim.log.levels.INFO)
+		local yanked_text = rel_path
+		if line_num then
+			yanked_text = yanked_text .. "#L" .. line_num
+		end
+		vim.fn.setreg("+", yanked_text)
+		vim.notify("Yanked: " .. yanked_text, vim.log.levels.INFO)
 	else
-		M.copy_absolute_path()
+		M.copy_absolute(line_num)
 	end
+end
+
+function M.copy_git_relative_path()
+	M.copy_git_relative(nil)
+end
+
+function M.copy_git_relative_line()
+	M.copy_git_relative(vim.fn.line("."))
 end
 
 function M.navigate()
@@ -44,4 +74,3 @@ function M.navigate()
 end
 
 return M
-

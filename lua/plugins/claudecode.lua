@@ -5,6 +5,7 @@ local select_key = "<leader>cc"
 
 return {
 	"coder/claudecode.nvim",
+	lazy = false,
 	dependencies = { "folke/snacks.nvim" },
 	keys = {
 		{ focus_key, "<cmd>ClaudeCodeFocus<cr>", desc = "Claude Focus", mode = { "n", "x" } },
