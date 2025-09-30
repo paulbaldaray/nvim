@@ -1,13 +1,11 @@
 local M = {}
 
-local delay = 25
-
 function M.force_normal_mode(callback)
 	if vim.fn.mode() ~= "n" then
 		local escape_keys = vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true)
 		vim.api.nvim_feedkeys(escape_keys, vim.fn.mode(), false)
 		if callback then
-			vim.defer_fn(callback, delay)
+			vim.defer_fn(callback, 20)
 		end
 	elseif callback then
 		callback()
@@ -24,7 +22,7 @@ function M.anymode()
 				do_jump()
 				vim.defer_fn(function()
 					M.force_normal_mode(do_jump)
-				end, delay)
+				end, 50)
 			end,
 		})
 	end)
