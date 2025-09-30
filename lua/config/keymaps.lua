@@ -27,8 +27,9 @@ vim.keymap.del("v", "<A-j>")
 vim.keymap.del("v", "<A-k>")
 
 -- Yanking
-local util = require("config.util")
+vim.keymap.set("n", "<leader>yp", require("util.path").copy_git_relative_path, { desc = "Yank relative path from Git root" })
 
-vim.keymap.set("n", "<leader>yp", util.CopyGitRelativePath, { desc = "Yank relative path from Git root" })
+vim.keymap.set("n", "<leader>yP", require("util.path").copy_absolute_path, { desc = "Yank absolute path" })
 
-vim.keymap.set("n", "<leader>yP", util.CopyAbsolutePath, { desc = "Yank absolute path" })
+vim.keymap.set({ "n", "v", "i", "x", "o", "t", "c", "s" }, "<C-s>", require("util.flash").anymode,
+  { desc = "Flash jump (from any mode)", noremap = true, silent = true })

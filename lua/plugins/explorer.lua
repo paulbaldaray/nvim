@@ -1,42 +1,7 @@
-local function pick_nearest_dir()
-	local picker = Snacks.picker.get({ source = "explorer" })[1]
-	local item = picker:current()
-	return vim.fn.isdirectory(item.file) == 1 and item.file or vim.fn.fnamemodify(item.file, ":h")
-end
-
-local function change_dir(dir)
-	vim.cmd("cd " .. vim.fn.fnameescape(dir))
-end
-
-local function open_explorer_at(dir)
-	if dir then
-		change_dir(dir)
-	end
-	Snacks.explorer()
-end
-
-local function explorer_parent_dir()
-	open_explorer_at(vim.fn.expand("%:p:h"))
-end
-
-local function explorer_git_root()
-	open_explorer_at(require("config.util").GitRoot())
-end
-
-local function explorer_cd_to_focused()
-	local dir = pick_nearest_dir()
-	change_dir(dir)
-end
-
-local function explorer_cd_parent()
-	local parent_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":h")
-	change_dir(parent_dir)
-end
-
 return {
 	"folke/snacks.nvim",
 	build = function()
-		require("config.util").ensure_binary({
+		require("util.install").ensure_binary({
 			name = "fd",
 			repo = "sharkdp/fd",
 			version = "v10.3.0",
@@ -48,8 +13,8 @@ return {
 		})
 	end,
 	keys = {
-		{ "<leader>e", explorer_git_root, desc = "Explorer (Git Root)" },
-		{ "<leader>E", explorer_parent_dir, desc = "Explorer (Parent Dir)" },
+		{ "<leader>e", require("util.explorer").git_root, desc = "Explorer (Git Root)" },
+		{ "<leader>E", require("util.explorer").parent_dir, desc = "Explorer (Parent Dir)" },
 	},
 	opts = {
 		picker = {
@@ -61,8 +26,11 @@ return {
 					win = {
 						list = {
 							keys = {
-								["."] = explorer_cd_to_focused,
-								["<BS>"] = explorer_cd_parent,
+								["."] = require("util.explorer").cd_to_focused,
+								["<BS>"] = require("util.explorer").cd_parent,
+								["/"] = function() require("flash").jump() end,
+								["i"] = function() require("flash").jump() end,
+								["<C-s>"] = require("util.flash").anymode,
 							},
 						},
 					},
