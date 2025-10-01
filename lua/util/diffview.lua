@@ -1,6 +1,6 @@
 local M = {}
 
-local last_commit = "HEAD"
+local last_commit = false
 
 local function close_if_open()
 	if next(require("diffview.lib").views) ~= nil then
@@ -10,11 +10,15 @@ local function close_if_open()
 	return false
 end
 
-function M.toggle()
+function M.view()
 	if close_if_open() then
 		return
 	end
-	vim.cmd("DiffviewOpen " .. last_commit)
+	if last_commit then
+		vim.cmd("DiffviewOpen " .. last_commit)
+	else
+		vim.cmd("DiffviewOpen")
+	end
 end
 
 function M.history()
@@ -29,13 +33,13 @@ function M.history()
 	vim.cmd("DiffviewFileHistory " .. current_file)
 end
 
-function M.compare()
+function M.select()
 	if close_if_open() then
 		return
 	end
 
 	-- Get recent commits with hash and title
-	local git_cmd = "git log --oneline -20 --pretty=format:'%h|%s'"
+	local git_cmd = "git log --oneline -50 --pretty=format:'%h|%s'"
 	local output = vim.fn.system(git_cmd)
 
 	if vim.v.shell_error ~= 0 then
@@ -43,8 +47,8 @@ function M.compare()
 		return
 	end
 
-	local commits = {}
-	local commit_hashes = {}
+	local commits = { "━━ View Staged/Unstaged ━━" }
+	local commit_hashes = { false }
 
 	for line in output:gmatch("[^\n]+") do
 		local hash, title = line:match("^([a-f0-9]+)|(.+)")
@@ -54,11 +58,10 @@ function M.compare()
 		end
 	end
 
-	vim.ui.select(commits, { prompt = "Compare with commit:" }, function(choice, idx)
+	vim.ui.select(commits, { prompt = "Diff with commit:" }, function(choice, idx)
 		if choice and idx then
-			local selected_hash = commit_hashes[idx]
-			last_commit = selected_hash
-			vim.cmd("DiffviewOpen " .. selected_hash)
+			last_commit = commit_hashes[idx]
+			M.view()
 		end
 	end)
 end
