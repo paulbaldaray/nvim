@@ -1,5 +1,7 @@
 local M = {}
 
+local last_commit = "HEAD"
+
 local function close_if_open()
 	if next(require("diffview.lib").views) ~= nil then
 		vim.cmd("DiffviewClose")
@@ -12,14 +14,19 @@ function M.toggle()
 	if close_if_open() then
 		return
 	end
-	vim.cmd("DiffviewOpen")
+	vim.cmd("DiffviewOpen " .. last_commit)
 end
 
 function M.history()
 	if close_if_open() then
 		return
 	end
-	vim.cmd("DiffviewFileHistory")
+	local current_file = vim.fn.expand("%")
+	if current_file == "" then
+		vim.notify("No file in current buffer", vim.log.levels.WARN)
+		return
+	end
+	vim.cmd("DiffviewFileHistory " .. current_file)
 end
 
 function M.compare()
@@ -47,18 +54,13 @@ function M.compare()
 		end
 	end
 
-	if #commits == 0 then
-		vim.notify("No commits found", vim.log.levels.WARN)
-		return
-	end
-
 	vim.ui.select(commits, { prompt = "Compare with commit:" }, function(choice, idx)
 		if choice and idx then
 			local selected_hash = commit_hashes[idx]
+			last_commit = selected_hash
 			vim.cmd("DiffviewOpen " .. selected_hash)
 		end
 	end)
 end
 
 return M
-
