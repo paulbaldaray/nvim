@@ -2,7 +2,6 @@
 
 -- Basics
 vim.g.mapleader = " "
-vim.keymap.set("i", "fj", "<Esc>")
 
 -- Scroll
 vim.keymap.set("n", "<C-e>", "3<C-e>")
