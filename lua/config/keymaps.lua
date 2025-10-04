@@ -26,6 +26,13 @@ vim.keymap.set("n", "<leader>yd", require("util.path").copy_absolute_directory, 
 -- Navigate
 vim.keymap.set("n", "<leader><leader>", require("util.path").navigate, { desc = "Navigate to file or directory" })
 
+-- Git
+vim.keymap.set("n", "<leader>gc", require("util.git").checkout_branch, { desc = "Checkout branch" })
+vim.keymap.set("n", "<leader>gyb", require("util.git").yank_current_branch, { desc = "Yank current branch" })
+vim.keymap.set("n", "<leader>gyB", require("util.git").yank_branch, { desc = "Yank branch (picker)" })
+vim.keymap.set("n", "<leader>gyc", require("util.git").yank_current_commit, { desc = "Yank current commit" })
+vim.keymap.set("n", "<leader>gyC", require("util.git").yank_commit, { desc = "Yank commit (picker)" })
+
 -- Jump
 vim.keymap.set(
 	{ "n", "v", "i", "x", "o", "t", "c", "s" },

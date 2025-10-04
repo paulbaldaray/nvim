@@ -33,6 +33,13 @@ function M.history()
 	vim.cmd("DiffviewFileHistory " .. current_file)
 end
 
+function M.history_full()
+	if close_if_open() then
+		return
+	end
+	vim.cmd("DiffviewFileHistory")
+end
+
 function M.select()
 	if close_if_open() then
 		return
