@@ -23,5 +23,17 @@ return {
 			desc = "Scratch Buffer Menu",
 			mode = { "n", "x" },
 		},
+		{
+			"<leader>c'",
+			require("util.claude-scratch").toggle,
+			desc = "Toggle Claude Scratch Buffer",
+			mode = { "n", "x" },
+		},
+		{
+			'<leader>c"',
+			require("util.claude-scratch").menu,
+			desc = "Claude Scratch Buffer Menu",
+			mode = { "n", "x" },
+		},
 	},
 }
