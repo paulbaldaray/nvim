@@ -35,4 +35,10 @@ function M.git_root()
 	open_explorer_at(require("util.path").git_root())
 end
 
+function M.find_in_focused()
+	local dir = pick_nearest_dir()
+	Snacks.picker.files({ cwd = dir })
+end
+
 return M
+

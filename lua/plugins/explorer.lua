@@ -9,18 +9,13 @@ return {
 			sources = {
 				explorer = {
 					layout = {
-						auto_hide = { "input" },
+						hidden = { "input" },
 					},
 					win = {
-						input = {
-							keys = {
-								["<Esc>"] = false,
-								["/"] = { "toggle_focus", mode = { "i", "n" } },
-							},
-						},
 						list = {
 							keys = {
 								["."] = require("util.explorer").cd_to_focused,
+								["/"] = require("util.explorer").find_in_focused,
 								["<BS>"] = require("util.explorer").cd_parent,
 								["<C-s>"] = require("util.flash").anymode,
 								["<Esc>"] = false,
