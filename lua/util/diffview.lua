@@ -99,8 +99,11 @@ end
 
 function M.git_log_author()
 	vim.ui.input({ prompt = "Author: " }, function(author)
-		if not author or author == "" then return end
-		local output = vim.fn.system("git log --author=" .. vim.fn.shellescape(author) .. " --oneline -50 --pretty=format:'%h|%s'")
+		if not author or author == "" then
+			return
+		end
+		local output =
+			vim.fn.system("git log --author=" .. vim.fn.shellescape(author) .. " --oneline -50 --pretty=format:'%h|%s'")
 		if vim.v.shell_error ~= 0 or output == "" then
 			vim.notify("No commits found for author: " .. author, vim.log.levels.WARN)
 			return
@@ -114,7 +117,9 @@ function M.git_log_author()
 			end
 		end
 		vim.ui.select(labels, { prompt = "Commits by " .. author .. ":" }, function(choice, idx)
-			if not choice then return end
+			if not choice then
+				return
+			end
 			local hash = hashes[idx]
 			add_to_history(hash)
 			pick_commit(hash)
@@ -144,6 +149,7 @@ function M.open_commit_history()
 		if hash then
 			pick_commit(hash)
 		else
+			last_open_commit = false
 			Snacks.picker.git_status()
 		end
 	end)
