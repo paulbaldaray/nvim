@@ -23,11 +23,12 @@ end
 
 local function pick_commit(hash)
 	last_open_commit = hash
+	local title = vim.trim(vim.fn.system("git log -1 --format=%s " .. hash))
 	Snacks.picker.git_diff({
 		cmd_args = { hash .. "^", hash },
 		staged = false,
 		group = true,
-		title = "Files in " .. hash,
+		title = hash .. " " .. title,
 	})
 end
 
@@ -94,6 +95,31 @@ function M.open_commit_visual()
 	else
 		vim.notify("Not a valid commit hash: " .. text, vim.log.levels.WARN)
 	end
+end
+
+function M.git_log_author()
+	vim.ui.input({ prompt = "Author: " }, function(author)
+		if not author or author == "" then return end
+		local output = vim.fn.system("git log --author=" .. vim.fn.shellescape(author) .. " --oneline -50 --pretty=format:'%h|%s'")
+		if vim.v.shell_error ~= 0 or output == "" then
+			vim.notify("No commits found for author: " .. author, vim.log.levels.WARN)
+			return
+		end
+		local labels, hashes = {}, {}
+		for line in output:gmatch("[^\n]+") do
+			local hash, title = line:match("^([a-f0-9]+)|(.+)")
+			if hash and title then
+				table.insert(labels, hash .. " " .. title)
+				table.insert(hashes, hash)
+			end
+		end
+		vim.ui.select(labels, { prompt = "Commits by " .. author .. ":" }, function(choice, idx)
+			if not choice then return end
+			local hash = hashes[idx]
+			add_to_history(hash)
+			pick_commit(hash)
+		end)
+	end)
 end
 
 function M.open_commit_history()
