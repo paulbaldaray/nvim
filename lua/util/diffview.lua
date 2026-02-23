@@ -7,9 +7,9 @@ local commit_history = {} -- { { hash = "...", title = "..." }, ... }
 local function add_to_history(hash)
 	vim.fn.system("git cat-file -t " .. hash)
 	if vim.v.shell_error ~= 0 then
-		vim.notify("Not a valid commit: " .. hash, vim.log.levels.WARN)
 		return false
 	end
+	hash = vim.trim(vim.fn.system("git rev-parse --short " .. hash))
 	local title = vim.trim(vim.fn.system("git log -1 --format=%s " .. hash))
 	for i, entry in ipairs(commit_history) do
 		if entry.hash == hash then
