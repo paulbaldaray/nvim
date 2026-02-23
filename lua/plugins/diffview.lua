@@ -6,6 +6,19 @@ return {
 		{ "<leader>gg", require("util.diffview").history, desc = "DiffHistory", mode = { "n", "v" } },
 		{ "<leader>gG", require("util.diffview").history_full, desc = "DiffHistory", mode = { "n", "v" } },
 		{ "<leader>gV", require("util.diffview").select, desc = "DiffSelect", mode = { "n", "v" } },
+		{ "<leader>go", require("util.diffview").open_commit, desc = "DiffOpen", mode = { "n", "v" } },
+		{
+			"go",
+			require("util.diffview").open_commit_visual,
+			desc = "DiffOpen (selection)",
+			mode = "v",
+		},
+		{
+			"<leader>gO",
+			require("util.diffview").open_commit_history,
+			desc = "DiffOpen (history)",
+			mode = { "n", "v" },
+		},
 	},
 	opts = {
 		enhanced_diff_hl = false,
