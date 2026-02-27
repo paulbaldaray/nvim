@@ -26,9 +26,9 @@ return {
 	},
 	config = function(_, opts)
 		require("diffview").setup(opts)
-		vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2d4d3a", fg = "#86dc2f" })
-		vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4d2d2d", fg = "#ff4848" })
-		vim.api.nvim_set_hl(0, "DiffChange", { bg = "#292b2e", fg = "#ffc777" })
-		vim.api.nvim_set_hl(0, "DiffText", { bg = "#5d5d3a", fg = "#ffc777", bold = true })
+		vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#29422d" })
+		vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#512e31" })
+		vim.api.nvim_set_hl(0, "DiffChange", { bg = "#45451a" })
+		vim.api.nvim_set_hl(0, "DiffText", { bg = "#45451a", bold = true })
 	end,
 }
